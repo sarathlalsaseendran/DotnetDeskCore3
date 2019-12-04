@@ -4,7 +4,7 @@
 
 ### Original Repo https://github.com/go2ismail/DotnetDesk (Dotnet ver 2.0)
 
-## Technology
+## Technologies used in the project
 
 #### ASP.NET Core 3.0 MVC
 #### EF (Entity Framework 3.0) Core Code First
