@@ -1,0 +1,142 @@
+﻿@model DotnetDeskCore3.Models.ApplicationUser
+@inject DotnetDeskCore3.Data.ApplicationDbContext Ctx
+@{
+    ViewData["Title"] = "UserProfile";
+    Layout = "~/Views/Shared/_LayoutAdminlteNoMenu.cshtml";
+    var customerId = Guid.Empty;
+    var organizationId = Guid.Empty;
+    Customer customer = null;
+    if (Model.IsCustomer)
+    {
+        var contact = Ctx.Contact.Where(x => x.applicationUserId.Equals(Model.Id)).FirstOrDefault();
+        customer = (contact != null) ? Ctx.Customer.Where(x => x.customerId.Equals(contact.customerId)).FirstOrDefault() : null;
+        customerId = (customer != null) ? customer.customerId : Guid.Empty;
+
+    }
+    if (Model.IsSupportAgent || Model.IsSupportEngineer)
+    {
+        SupportAgent supportAgent = null;
+        supportAgent = Ctx.SupportAgent.Where(x => x.applicationUserId.Equals(Model.Id)).FirstOrDefault();
+        if (Model.IsSupportAgent) { organizationId = (supportAgent != null) ? supportAgent.organizationId : Guid.Empty; }
+
+        SupportEngineer supportEngineer = null;
+        supportEngineer = Ctx.SupportEngineer.Where(x => x.applicationUserId.Equals(Model.Id)).FirstOrDefault();
+        if (Model.IsSupportEngineer) { organizationId = (supportEngineer != null) ? supportEngineer.organizationId : Guid.Empty; }
+
+    }
+}
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-3">
+            <!-- Profile Image -->
+            <div class="box box-primary">
+                <div class="box-body box-profile">
+                    <img id="profilePicture" class="profile-user-img img-responsive img-circle" src="../@Model.ProfilePictureUrl" alt="User profile picture">
+                    <h3 class="profile-username text-center"><span class="profile-fullName">@Model.FullName</span></h3>
+                    <p class="text-muted text-center">Active Member</p>
+
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item text-center">
+                            <span class="btn btn-success fileinput-button">
+                                <i class="fa fa-camera bg-green"></i>
+                                <span>Select file ...</span>
+                                <!-- The file input field used as target for the file upload widget -->
+                                <input id="fileupload" type="file" name="files" multiple="">
+                            </span>
+
+                        </li>
+                        <li class="list-group-item">
+                            <div id="progress" class="progress">
+                                <div class="progress-bar progress-bar-success"></div>
+                            </div>
+                        </li>
+
+                    </ul>
+                    @if (Model.IsCustomer)
+                    {
+                        <a href="@DotnetDeskCore3.MVC.Pages.TicketCustomer.FullUrl?cust=@customerId" class="btn btn-primary btn-block"><b><i class="fa fa-building"></i> Tickets</b></a>
+                    }
+                    else if (Model.IsSupportAgent || Model.IsSupportEngineer)
+                    {
+
+                        <a href="@DotnetDeskCore3.MVC.Pages.TicketIndex.FullUrl?org=@organizationId" class="btn btn-primary btn-block"><b><i class="fa fa-building"></i> Tickets</b></a>
+                    }
+                    else
+                    {
+
+                        <a href="@DotnetDeskCore3.MVC.Pages.ConfigOrganization.FullUrl" class="btn btn-primary btn-block"><b><i class="fa fa-building"></i> Organizations</b></a>
+                    }
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+
+        </div>
+        <!-- /.col -->
+        <div class="col-md-9">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+
+                    <li class="active"><a href="#editProfile" data-toggle="tab">Edit Profile</a></li>
+                    <li><a href="#changePassword" data-toggle="tab">Change Password</a></li>
+                </ul>
+                <div class="tab-content">
+
+                    <!-- /.tab-pane -->
+                    <div class="active tab-pane" id="editProfile">
+                        <div class="small-box bg-green">
+                            <div class="inner">
+                                <h4>Change Your Personal Profile Data</h4>
+
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-person"></i>
+                            </div>
+
+                            <a onclick="ShowPopup('@Url.Action("PersonalProfile","Config")')" class="btn small-box-footer">Open Personal Profile Form <i class="fa fa-gear"></i></a>
+                        </div>
+                    </div>
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="changePassword">
+                        <div class="small-box bg-green">
+                            <div class="inner">
+                                <h4>Change Old Password With The New Password</h4>
+
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-key"></i>
+                            </div>
+
+                            <a onclick="ShowPopup('@Url.Action("ChangePassword","Manage")')" class="btn small-box-footer">Open Change Password Form <i class="fa fa-gear"></i></a>
+                        </div>
+
+                    </div>
+                    <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <!-- /.nav-tabs-custom -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->
+<!--modal placeholder-->
+<div class="modal modal-primary fade" id="modalDefault">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script src="~/js/views/config/userprofile.js"></script>
+
+}

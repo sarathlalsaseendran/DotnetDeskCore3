@@ -1,0 +1,70 @@
+﻿@using System.Collections.Generic
+@using System.Linq
+@using Microsoft.AspNetCore.Http
+@model LoginViewModel
+@inject SignInManager<ApplicationUser> SignInManager
+
+@{
+    ViewData["Title"] = "Log in";
+    Layout = "_LayoutAdminlteBlank";
+}
+
+@if (ViewData["error"] != null)
+{
+    <input type="hidden" id="error" value="@ViewData["error"].ToString()"/>
+}
+
+<div class="login-box-body">
+    <p class="login-box-msg"><b>Sign in to start your session</b></p>
+    <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+        
+        <div class="form-group has-feedback">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" />
+            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group has-feedback">
+            <label asp-for="Password"></label>
+            <input asp-for="Password" class="form-control" />
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="row">
+            <div class="col-xs-8">
+                <div class="checkbox icheck">
+                    <label asp-for="RememberMe">
+                        <input asp-for="RememberMe" />
+                        @Html.DisplayNameFor(m => m.RememberMe)
+                    </label>
+                </div>
+            </div>
+            <!-- /.col -->
+            <div class="col-xs-4">
+                <button type="submit" class="btn btn-primary btn-block btn-flat">Log In</button>
+            </div>
+            <!-- /.col -->
+        </div>
+
+
+        <a href="@DotnetDeskCore3.MVC.Accounts.ForgotPassword.FullUrl">I forgot my password</a><br>
+        <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" class="text-center">Register a new membership</a>
+    </form>
+
+
+
+</div>
+
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script>
+        $(document).ready(function () { 
+            var error = $('#error').val();
+            if (error) {
+                ShowMessageError(error);
+            }
+            
+        });
+    </script>
+}

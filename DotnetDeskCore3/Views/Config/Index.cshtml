@@ -1,0 +1,57 @@
+﻿@model IEnumerable<DotnetDeskCore3.Models.Organization>
+@inject UserManager<ApplicationUser> UserManager
+@inject DotnetDeskCore3.Data.ApplicationDbContext Ctx
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutAdminlteWallpaper.cshtml";
+    ApplicationUser appUser = await UserManager.GetUserAsync(User);
+    Guid cust = Guid.Empty;
+    if (appUser.IsCustomer)
+    {
+        Contact contact = Ctx.Contact.Where(x => x.applicationUserId.Equals(appUser.Id)).FirstOrDefault();
+        Customer customer = (contact != null) ? Ctx.Customer.Where(x => x.customerId.Equals(contact.customerId)).FirstOrDefault() : null;
+        cust = (customer != null) ? customer.customerId : Guid.Empty;
+    }
+}
+<div class="content">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+
+            <div class="col-lg-4">
+                <!-- small box -->
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h4>@item.organizationName</h4>
+
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+
+                    @if (appUser.IsSuperAdmin)
+                    {
+                        <a href="@Url.Action("Index", "Customer", new { org = item.organizationId })" class="small-box-footer"><h3>Enter <i class="fa fa-arrow-circle-right"></i></h3></a>
+                        <a href="@Url.Action("Organization", "Config")" class="small-box-footer">Configure <i class="fa fa-gear"></i></a>
+                    }
+                    else if (appUser.IsCustomer)
+                    {
+                        <a href="@Url.Action("Customer", "Ticket", new { cust = cust })" class="small-box-footer"><h3>Enter <i class="fa fa-arrow-circle-right"></i></h3></a>
+
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Index", "Ticket", new { org = item.organizationId })" class="small-box-footer"><h3>Enter <i class="fa fa-arrow-circle-right"></i></h3></a>
+
+                    }
+
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+
+
+
+
