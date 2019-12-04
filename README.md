@@ -2,7 +2,7 @@
 
 ## Dotnet 3.0 version of DotnetDesk project originally written by Ismail Hamzah
 
-### Original Repo https://github.com/go2ismail/DotnetDesk
+### Original Repo https://github.com/go2ismail/DotnetDesk (Dotnet ver 2.0)
 
 ## Technology
 
