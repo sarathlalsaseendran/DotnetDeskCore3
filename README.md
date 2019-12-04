@@ -23,5 +23,5 @@
 - Visual Studio 2019
 
 ### How to create database
-#### Please use EF Command in Package Manager Console 'update-database'
+#### Please use EF Command in Package Manager Console *__'update-database'__*
 
