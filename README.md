@@ -6,21 +6,21 @@
 
 ## Technologies used in the project
 
-#### ASP.NET Core 3.0 MVC
-#### EF (Entity Framework 3.0) Core Code First
-#### jQuery
-#### Ajax
-#### ASP.NET Core 3.0 Web API
-#### Adminlte template
-#### datatables.net
-#### Dependency Injection
-#### Email Handling (SMTP)
-#### Custom 404/500 error handling
-#### file upload (using blueimp jquery file upload)
+- ASP.NET Core 3.0 MVC
+- EF (Entity Framework 3.0) Core Code First
+- jQuery
+- Ajax
+- ASP.NET Core 3.0 Web API
+- Adminlte template
+- datatables.net
+- Dependency Injection
+- Email Handling (SMTP)
+- Custom 404/500 error handling
+- file upload (using blueimp jquery file upload)
 
 ### Prerequisites 
-#### .NET Core 3.0 SDK
-#### Visual Studio 2019
+- .NET Core 3.0 SDK
+- Visual Studio 2019
 
 ### How to create database
 #### Please use EF Command in Package Manager Console 'update-database'
