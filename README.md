@@ -17,3 +17,11 @@
 #### Email Handling (SMTP)
 #### Custom 404/500 error handling
 #### file upload (using blueimp jquery file upload)
+
+### Prerequisites 
+#### .NET Core 3.0 SDK
+#### Visual Studio 2019
+
+### How to create database
+#### Please use EF Command in Package Manager Console 'update-database'
+
