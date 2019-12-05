@@ -26,5 +26,5 @@
 #### Please use EF Command in Package Manager Console *__'update-database'__*
 
 
-Give a ⭐️ to this repo, if this project helped you! Also please give a ⭐️ to the Original creator of this repo. 
+Give a ⭐️ to this repo, if this project helped you! Also please give a ⭐️ to the original creator of this project. 
 
