@@ -20,7 +20,7 @@
 
 ### Prerequisites 
 - .NET Core 3.1 SDK
-- Visual Studio 2019
+- Visual Studio 2019 ver 16.4 or higher
 
 ### How to create database
 #### Please use EF Command in Package Manager Console *__'update-database'__*
